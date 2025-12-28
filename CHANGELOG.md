@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Create template from Canva URL
   - Get template by ID (with all layers)
   - List all templates
-  - Update template (name, dimensions, background color)
   - Delete template
 - **Variant operations:**
   - Create variant with layer overrides
