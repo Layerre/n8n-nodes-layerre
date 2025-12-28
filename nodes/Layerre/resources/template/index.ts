@@ -2,7 +2,6 @@ import type { INodeProperties } from 'n8n-workflow';
 import { templateCreateDescription } from './create';
 import { templateGetDescription } from './get';
 import { templateGetAllDescription } from './getAll';
-import { templateUpdateDescription } from './update';
 import { templateDeleteDescription } from './delete';
 
 const showOnlyForTemplate = {
@@ -67,25 +66,12 @@ export const templateDescription: INodeProperties[] = [
 					},
 				},
 			},
-			{
-				name: 'Update',
-				value: 'update',
-				action: 'Update a template',
-				description: 'Update a template',
-				routing: {
-					request: {
-						method: 'PATCH',
-						url: '=/template/{{$parameter.templateId}}',
-					},
-				},
-			},
 		],
 		default: 'create',
 	},
 	...templateCreateDescription,
 	...templateGetDescription,
 	...templateGetAllDescription,
-	...templateUpdateDescription,
 	...templateDeleteDescription,
 ];
 

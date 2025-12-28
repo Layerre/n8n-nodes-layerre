@@ -7,25 +7,18 @@ const showOnlyForVariantGetAll = {
 
 export const variantGetAllDescription: INodeProperties[] = [
 	{
-		displayName: 'Template ID',
+		displayName: 'Template Name or ID',
 		name: 'templateId',
-		type: 'string',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getTemplates',
+		},
 		default: '',
 		required: true,
 		displayOptions: {
 			show: showOnlyForVariantGetAll,
 		},
-		description: 'The ID of the template to list variants for',
-	},
-	{
-		displayName: 'Return All',
-		name: 'returnAll',
-		type: 'boolean',
-		default: false,
-		displayOptions: {
-			show: showOnlyForVariantGetAll,
-		},
-		description: 'Whether to return all results or only up to a given limit',
+		description: 'The template to list variants for. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
 		displayName: 'Limit',
@@ -37,10 +30,7 @@ export const variantGetAllDescription: INodeProperties[] = [
 			maxValue: 1000,
 		},
 		displayOptions: {
-			show: {
-				...showOnlyForVariantGetAll,
-				returnAll: [false],
-			},
+			show: showOnlyForVariantGetAll,
 		},
 		description: 'Max number of results to return',
 		routing: {
@@ -50,5 +40,32 @@ export const variantGetAllDescription: INodeProperties[] = [
 			},
 		},
 	},
+	{
+		displayName: 'Options',
+		name: 'options',
+		type: 'collection',
+		placeholder: 'Add Option',
+		default: {},
+		displayOptions: {
+			show: showOnlyForVariantGetAll,
+		},
+		options: [
+			{
+				displayName: 'Skip',
+				name: 'skip',
+				type: 'number',
+				default: 0,
+				typeOptions: {
+					minValue: 0,
+				},
+				description: 'Number of results to skip (for pagination)',
+				routing: {
+					send: {
+						type: 'query',
+						property: 'skip',
+					},
+				},
+			},
+		],
+	},
 ];
-

@@ -7,15 +7,17 @@ const showOnlyForTemplateDelete = {
 
 export const templateDeleteDescription: INodeProperties[] = [
 	{
-		displayName: 'Template ID',
+		displayName: 'Template Name or ID',
 		name: 'templateId',
-		type: 'string',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getTemplates',
+		},
 		default: '',
 		required: true,
 		displayOptions: {
 			show: showOnlyForTemplateDelete,
 		},
-		description: 'The ID of the template to delete',
+		description: 'The template to delete. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 ];
-

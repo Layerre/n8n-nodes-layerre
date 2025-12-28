@@ -7,26 +7,32 @@ const showOnlyForVariantDelete = {
 
 export const variantDeleteDescription: INodeProperties[] = [
 	{
-		displayName: 'Template ID',
+		displayName: 'Template Name or ID',
 		name: 'templateId',
-		type: 'string',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getTemplates',
+		},
 		default: '',
 		required: true,
 		displayOptions: {
 			show: showOnlyForVariantDelete,
 		},
-		description: 'The ID of the template',
+		description: 'The template that contains the variant. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
-		displayName: 'Variant ID',
+		displayName: 'Variant Name or ID',
 		name: 'variantId',
-		type: 'string',
+		type: 'options',
+		typeOptions: {
+			loadOptionsMethod: 'getVariants',
+			loadOptionsDependsOn: ['templateId'],
+		},
 		default: '',
 		required: true,
 		displayOptions: {
 			show: showOnlyForVariantDelete,
 		},
-		description: 'The ID of the variant to delete',
+		description: 'The variant to delete. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 ];
-

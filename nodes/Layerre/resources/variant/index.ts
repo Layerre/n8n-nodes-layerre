@@ -36,57 +36,81 @@ async function transformVariantCreateBody(
 				layer_id: override.layerId,
 			};
 
+			// Get override options (nested collection)
+			const overrideOptions = (override.overrideOptions as Record<string, unknown>) || {};
+
 			// Add position if set
-			if (override.x !== undefined && override.x !== 0) {
-				apiOverride.x = override.x;
+			if (overrideOptions.x !== undefined && overrideOptions.x !== 0) {
+				apiOverride.x = overrideOptions.x;
 			}
-			if (override.y !== undefined && override.y !== 0) {
-				apiOverride.y = override.y;
+			if (overrideOptions.y !== undefined && overrideOptions.y !== 0) {
+				apiOverride.y = overrideOptions.y;
 			}
 
 			// Build properties object
 			const properties: Record<string, unknown> = {};
 
 			// Text properties
-			if (override.text) {
-				properties.text = override.text;
+			if (overrideOptions.text) {
+				properties.text = overrideOptions.text;
 			}
-			if (override.color) {
-				properties.color = override.color;
+			if (overrideOptions.color) {
+				properties.color = overrideOptions.color;
 			}
-			if (override.fontSize && override.fontSize !== 0) {
-				properties.font_size = override.fontSize;
+			if (overrideOptions.fontSize && overrideOptions.fontSize !== 0) {
+				properties.font_size = overrideOptions.fontSize;
 			}
-			if (override.fontName) {
-				properties.font_name = override.fontName;
+			if (overrideOptions.fontName) {
+				properties.font_name = overrideOptions.fontName;
 			}
-			if (override.textAlign && override.textAlign !== 'left') {
-				properties.text_align = override.textAlign;
+			if (overrideOptions.textAlign && overrideOptions.textAlign !== 'left') {
+				properties.text_align = overrideOptions.textAlign;
+			}
+			if (overrideOptions.letterSpacing !== undefined && overrideOptions.letterSpacing !== 0) {
+				properties.letter_spacing = overrideOptions.letterSpacing;
+			}
+			if (overrideOptions.lineSpacing !== undefined && overrideOptions.lineSpacing !== 1000) {
+				properties.line_spacing = overrideOptions.lineSpacing;
+			}
+
+			// Font style (weight, italic, underline)
+			const fontStyle: Record<string, unknown> = {};
+			if (overrideOptions.fontWeight) {
+				fontStyle.weight = overrideOptions.fontWeight;
+			}
+			if (overrideOptions.fontItalic) {
+				fontStyle.italic = overrideOptions.fontItalic;
+			}
+			if (overrideOptions.fontUnderline) {
+				fontStyle.underline = overrideOptions.fontUnderline;
+			}
+			if (Object.keys(fontStyle).length > 0) {
+				properties.font_style = fontStyle;
 			}
 
 			// Image properties
-			if (override.imgUrl) {
-				properties.img_url = override.imgUrl;
+			if (overrideOptions.imgUrl) {
+				properties.img_url = overrideOptions.imgUrl;
 			}
-			if (override.opacity !== undefined && override.opacity !== 1) {
-				properties.opacity = override.opacity;
+			if (overrideOptions.opacity !== undefined && overrideOptions.opacity !== 1) {
+				properties.opacity = overrideOptions.opacity;
 			}
-			if (override.flipHorizontal) {
-				properties.flip_horizontal = override.flipHorizontal;
+			if (overrideOptions.flipHorizontal) {
+				properties.flip_horizontal = overrideOptions.flipHorizontal;
 			}
-			if (override.flipVertical) {
-				properties.flip_vertical = override.flipVertical;
+			if (overrideOptions.flipVertical) {
+				properties.flip_vertical = overrideOptions.flipVertical;
 			}
 
 			// Common properties
-			if (override.width && override.width !== 0) {
-				properties.width = override.width;
+			if (overrideOptions.width && overrideOptions.width !== 0) {
+				properties.width = overrideOptions.width;
 			}
-			if (override.height && override.height !== 0) {
-				properties.height = override.height;
+			if (overrideOptions.height && overrideOptions.height !== 0) {
+				properties.height = overrideOptions.height;
 			}
-			if (override.rotation !== undefined && override.rotation !== 0) {
-				properties.rotation = override.rotation;
+			if (overrideOptions.rotation !== undefined && overrideOptions.rotation !== 0) {
+				properties.rotation = overrideOptions.rotation;
 			}
 
 			// Only add properties if there are any

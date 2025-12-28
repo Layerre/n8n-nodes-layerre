@@ -12,6 +12,9 @@ export const templateCreateDescription: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		required: true,
+		typeOptions: {
+			maxLength: 2048,
+		},
 		displayOptions: {
 			show: showOnlyForTemplateCreate,
 		},

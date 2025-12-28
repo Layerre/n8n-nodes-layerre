@@ -14,7 +14,7 @@ export class Layerre implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Layerre',
 		name: 'layerre',
-		icon: { light: 'file:layerre.svg', dark: 'file:layerre.dark.svg' },
+		icon: 'file:layerre.png',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
@@ -71,11 +71,11 @@ export class Layerre implements INodeType {
 						return [];
 					}
 
-					return templates.map((template: IDataObject) => ({
-						name: (template.name as string) || 'Unnamed Template',
-						value: template.id as string,
-						description: `${template.width}x${template.height} - ${(template.layers as IDataObject[])?.length || 0} layers`,
-					}));
+				return templates.map((template: IDataObject) => ({
+					name: (template.name as string) || 'Unnamed Template',
+					value: template.id as string,
+					description: `ID: ${template.id}`,
+				}));
 				} catch {
 					return [];
 				}
@@ -112,6 +112,36 @@ export class Layerre implements INodeType {
 							name: `${layer.name as string} (${layerType})`,
 							value: layer.id as string,
 							description,
+						};
+					});
+				} catch {
+					return [];
+				}
+			},
+
+			/**
+			 * Load variants for the selected template
+			 */
+			async getVariants(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				try {
+					const templateId = this.getCurrentNodeParameter('templateId') as string;
+					
+					if (!templateId) {
+						return [];
+					}
+
+					const variants = await layerreApiRequest.call(this, 'GET', `/v1/template/${templateId}/variants`, {}, { limit: 1000 });
+					
+					if (!Array.isArray(variants)) {
+						return [];
+					}
+
+					return variants.map((variant: IDataObject) => {
+						const createdAt = variant.created_at ? new Date(variant.created_at as string).toLocaleDateString() : '';
+						return {
+							name: `Variant ${(variant.id as string).substring(0, 8)}... (${createdAt})`,
+							value: variant.id as string,
+							description: `ID: ${variant.id}`,
 						};
 					});
 				} catch {
