@@ -7,7 +7,9 @@ This is an n8n community node for [Layerre](https://layerre.com) - a platform fo
 [Installation](#installation)  
 [Operations](#operations)  
 [Credentials](#credentials)  
-[Usage](#usage)
+[Usage](#usage)  
+[Contributing](#contributing)  
+[License](#license)
 
 ## Installation
 
@@ -82,12 +84,57 @@ The node will render the variant and return the image URL.
 
 Use data from a spreadsheet to create personalized images at scale by mapping columns to layer overrides.
 
+## Contributing
+
+Contributions are welcome! Here's how to get started:
+
+### Development Setup
+
+1. Fork the repository on GitHub
+
+2. Clone your fork:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/n8n-nodes-layerre.git
+   cd n8n-nodes-layerre
+   ```
+
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Start development mode (runs n8n with the node loaded):
+   ```bash
+   npm run dev
+   ```
+
+5. Make your changes and test in the n8n UI
+
+### Building
+
+```bash
+npm run build
+```
+
+### Linting
+
+```bash
+npm run lint
+npm run lint:fix  # Auto-fix issues
+```
+
+### Submitting Changes
+
+1. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
 ## Resources
 
-- [Layerre Documentation](https://docs.layerre.com)
-- [Layerre API Reference](https://docs.layerre.com/api)
+- [Layerre Documentation](https://layerre.com/docs)
 - [n8n Community Nodes](https://docs.n8n.io/integrations/community-nodes/)
 
 ## License
 
-[MIT](LICENSE.md)
+[MIT](LICENSE)

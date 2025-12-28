@@ -11,7 +11,7 @@ export class LayerreApi implements ICredentialType {
 
 	displayName = 'Layerre API';
 
-	documentationUrl = 'https://docs.layerre.com';
+	documentationUrl = 'https://layerre.com/docs';
 
 	icon: Icon = 'file:../nodes/Layerre/layerre.svg';
 

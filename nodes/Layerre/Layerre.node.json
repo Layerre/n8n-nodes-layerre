@@ -6,12 +6,12 @@
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://docs.layerre.com/api/authentication"
+				"url": "https://layerre.com/docs"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://docs.layerre.com"
+				"url": "https://layerre.com/docs"
 			}
 		]
 	},
