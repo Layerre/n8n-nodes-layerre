@@ -104,7 +104,6 @@ export const variantCreateDescription: INodeProperties[] = [
 						default: {},
 						description: 'Optional properties to override for this layer',
 						options: [
-							// Position & Transform
 							{
 								displayName: 'Height',
 								name: 'height',
@@ -117,6 +116,42 @@ export const variantCreateDescription: INodeProperties[] = [
 								description: 'Override the layer height in pixels',
 							},
 							{
+								displayName: 'Image Flip Horizontal',
+								name: 'flipHorizontal',
+								type: 'boolean',
+								default: false,
+								description: 'Whether to flip the image horizontally (for image layers)',
+							},
+							{
+								displayName: 'Image Flip Vertical',
+								name: 'flipVertical',
+								type: 'boolean',
+								default: false,
+								description: 'Whether to flip the image vertically (for image layers)',
+							},
+							{
+								displayName: 'Image Opacity',
+								name: 'opacity',
+								type: 'number',
+								default: 1,
+								typeOptions: {
+									minValue: 0,
+									maxValue: 1,
+									numberStepSize: 0.1,
+								},
+								description: 'Override the image opacity (0.0 = transparent, 1.0 = opaque, for image layers)',
+							},
+							{
+								displayName: 'Image URL',
+								name: 'imgUrl',
+								type: 'string',
+								default: '',
+								typeOptions: {
+									maxLength: 2048,
+								},
+								description: 'Override the image URL (for image layers)',
+							},
+							{
 								displayName: 'Rotation',
 								name: 'rotation',
 								type: 'number',
@@ -127,40 +162,6 @@ export const variantCreateDescription: INodeProperties[] = [
 								},
 								description: 'Override the rotation angle in degrees',
 							},
-							{
-								displayName: 'Width',
-								name: 'width',
-								type: 'number',
-								default: 0,
-								typeOptions: {
-									minValue: 1,
-									maxValue: 10000,
-								},
-								description: 'Override the layer width in pixels',
-							},
-							{
-								displayName: 'X Position',
-								name: 'x',
-								type: 'number',
-								default: 0,
-								typeOptions: {
-									minValue: -10000,
-									maxValue: 10000,
-								},
-								description: 'Override the X position in pixels',
-							},
-							{
-								displayName: 'Y Position',
-								name: 'y',
-								type: 'number',
-								default: 0,
-								typeOptions: {
-									minValue: -10000,
-									maxValue: 10000,
-								},
-								description: 'Override the Y position in pixels',
-							},
-							// Text Properties
 							{
 								displayName: 'Text',
 								name: 'text',
@@ -268,42 +269,38 @@ export const variantCreateDescription: INodeProperties[] = [
 								},
 								description: 'Override the line spacing in pixels (for text layers). Default is 1000.',
 							},
-							// Image Properties
 							{
-								displayName: 'Image URL',
-								name: 'imgUrl',
-								type: 'string',
-								default: '',
-								typeOptions: {
-									maxLength: 2048,
-								},
-								description: 'Override the image URL (for image layers)',
-							},
-							{
-								displayName: 'Image Flip Horizontal',
-								name: 'flipHorizontal',
-								type: 'boolean',
-								default: false,
-								description: 'Whether to flip the image horizontally (for image layers)',
-							},
-							{
-								displayName: 'Image Flip Vertical',
-								name: 'flipVertical',
-								type: 'boolean',
-								default: false,
-								description: 'Whether to flip the image vertically (for image layers)',
-							},
-							{
-								displayName: 'Image Opacity',
-								name: 'opacity',
+								displayName: 'Width',
+								name: 'width',
 								type: 'number',
-								default: 1,
+								default: 0,
 								typeOptions: {
-									minValue: 0,
-									maxValue: 1,
-									numberStepSize: 0.1,
+									minValue: 1,
+									maxValue: 10000,
 								},
-								description: 'Override the image opacity (0.0 = transparent, 1.0 = opaque, for image layers)',
+								description: 'Override the layer width in pixels',
+							},
+							{
+								displayName: 'X Position',
+								name: 'x',
+								type: 'number',
+								default: 0,
+								typeOptions: {
+									minValue: -10000,
+									maxValue: 10000,
+								},
+								description: 'Override the X position in pixels',
+							},
+							{
+								displayName: 'Y Position',
+								name: 'y',
+								type: 'number',
+								default: 0,
+								typeOptions: {
+									minValue: -10000,
+									maxValue: 10000,
+								},
+								description: 'Override the Y position in pixels',
 							},
 						],
 					},

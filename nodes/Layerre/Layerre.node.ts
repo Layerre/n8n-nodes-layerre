@@ -65,19 +65,73 @@ export class Layerre implements INodeType {
 			 */
 			async getTemplates(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				try {
-					const templates = await layerreApiRequest.call(this, 'GET', '/v1/templates', {}, { limit: 1000 });
-					
+					const templates = await layerreApiRequest.call(
+						this,
+						'GET',
+						'/v1/templates',
+						{},
+						{
+							limit: 100,
+							skip: 0,
+						},
+					);
+
 					if (!Array.isArray(templates)) {
-						return [];
+						return [
+							{
+								name: 'Error: Invalid response from API',
+								value: '',
+								description: 'Please check your API credentials',
+							},
+						];
 					}
 
-				return templates.map((template: IDataObject) => ({
-					name: (template.name as string) || 'Unnamed Template',
-					value: template.id as string,
-					description: `ID: ${template.id}`,
-				}));
-				} catch {
-					return [];
+					if (templates.length === 0) {
+						return [
+							{
+								name: 'No Templates Found',
+								value: '',
+								description: 'Create a template first to see it here',
+							},
+						];
+					}
+
+					// Sort by updated_at (most recent first) - API should do this, but ensure it
+					const sortedTemplates = templates.sort((a: IDataObject, b: IDataObject) => {
+						const dateA = a.updated_at ? new Date(a.updated_at as string).getTime() : 0;
+						const dateB = b.updated_at ? new Date(b.updated_at as string).getTime() : 0;
+						return dateB - dateA;
+					});
+
+					const options = sortedTemplates.map((template: IDataObject) => {
+						const name = (template.name as string) || 'Unnamed Template';
+						const id = (template.id as string).substring(0, 8);
+
+						return {
+							name: `${name}`,
+							value: template.id as string,
+							description: `ID: ${id}`,
+						};
+					});
+
+					// Add info message if we hit the limit
+					if (templates.length >= 100) {
+						options.push({
+							name: '─────────────────────────────',
+							value: '',
+							description: 'Showing most recent 100 templates. Use Template ID directly if not listed.',
+						});
+					}
+
+					return options;
+				} catch (error) {
+					return [
+						{
+							name: 'Error Loading Templates',
+							value: '',
+							description: `${error instanceof Error ? error.message : 'Unknown error'}`,
+						},
+					];
 				}
 			},
 
@@ -87,35 +141,86 @@ export class Layerre implements INodeType {
 			async getLayers(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				try {
 					const templateId = this.getCurrentNodeParameter('templateId') as string;
-					
+
 					if (!templateId) {
-						return [];
+						return [
+							{
+								name: 'Please Select a Template First',
+								value: '',
+								description: 'Choose a template to see its layers',
+							},
+						];
 					}
 
-					const template = await layerreApiRequest.call(this, 'GET', `/v1/template/${templateId}`) as IDataObject;
-					
+					const template = (await layerreApiRequest.call(
+						this,
+						'GET',
+						`/v1/template/${templateId}`,
+					)) as IDataObject;
+
 					if (!template || !Array.isArray(template.layers)) {
-						return [];
+						return [
+							{
+								name: 'Error: Could not load template layers',
+								value: '',
+								description: 'Template may not exist or has no layers',
+							},
+						];
 					}
 
-					return (template.layers as IDataObject[]).map((layer: IDataObject) => {
+					if (template.layers.length === 0) {
+						return [
+							{
+								name: 'No Layers Found',
+								value: '',
+								description: 'This template has no editable layers',
+							},
+						];
+					}
+
+					// Group and sort layers by type for better UX
+					const layers = template.layers as IDataObject[];
+					const sortedLayers = layers.sort((a: IDataObject, b: IDataObject) => {
+						// Sort by layer type first (text, image, shape), then by name
+						const typeOrder: Record<string, number> = { text: 1, image: 2, shape: 3 };
+						const typeA = typeOrder[a.layer_type as string] || 99;
+						const typeB = typeOrder[b.layer_type as string] || 99;
+
+						if (typeA !== typeB) return typeA - typeB;
+						return (a.name as string).localeCompare(b.name as string);
+					});
+
+					return sortedLayers.map((layer: IDataObject) => {
 						const layerType = layer.layer_type as string;
 						const properties = (layer.properties as IDataObject) || {};
-						let description = `${layerType} layer`;
-						
+						const layerName = layer.name as string;
+
+						// Build better description based on layer type
+						let description = `${layerType.charAt(0).toUpperCase() + layerType.slice(1)} layer`;
+
 						if (layerType === 'text' && properties.text) {
 							const text = properties.text as string;
-							description = text.length > 50 ? text.substring(0, 50) + '...' : text;
+							description = text.length > 40 ? `"${text.substring(0, 40)}..."` : `"${text}"`;
+						} else if (layerType === 'image' && properties.img_url) {
+							const url = properties.img_url as string;
+							const fileName = url.split('/').pop() || 'image';
+							description = fileName.length > 30 ? fileName.substring(0, 30) + '...' : fileName;
 						}
 
 						return {
-							name: `${layer.name as string} (${layerType})`,
+							name: layerName,
 							value: layer.id as string,
-							description,
+							description: description,
 						};
 					});
-				} catch {
-					return [];
+				} catch (error) {
+					return [
+						{
+							name: 'Error Loading Layers',
+							value: '',
+							description: `${error instanceof Error ? error.message : 'Unknown error'}`,
+						},
+					];
 				}
 			},
 
@@ -125,27 +230,83 @@ export class Layerre implements INodeType {
 			async getVariants(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 				try {
 					const templateId = this.getCurrentNodeParameter('templateId') as string;
-					
+
 					if (!templateId) {
-						return [];
+						return [
+							{
+								name: 'Please Select a Template First',
+								value: '',
+								description: 'Choose a template to see its variants',
+							},
+						];
 					}
 
-					const variants = await layerreApiRequest.call(this, 'GET', `/v1/template/${templateId}/variants`, {}, { limit: 1000 });
-					
+					const variants = await layerreApiRequest.call(
+						this,
+						'GET',
+						`/v1/template/${templateId}/variants`,
+						{},
+						{ limit: 100 },
+					);
+
 					if (!Array.isArray(variants)) {
-						return [];
+						return [
+							{
+								name: 'Error: Invalid response from API',
+								value: '',
+								description: 'Please check your API credentials',
+							},
+						];
 					}
 
-					return variants.map((variant: IDataObject) => {
-						const createdAt = variant.created_at ? new Date(variant.created_at as string).toLocaleDateString() : '';
+					if (variants.length === 0) {
+						return [
+							{
+								name: 'No Variants Found',
+								value: '',
+								description: 'Create a variant for this template first',
+							},
+						];
+					}
+
+					// Sort by created_at (most recent first)
+					const sortedVariants = variants.sort((a: IDataObject, b: IDataObject) => {
+						const dateA = a.created_at ? new Date(a.created_at as string).getTime() : 0;
+						const dateB = b.created_at ? new Date(b.created_at as string).getTime() : 0;
+						return dateB - dateA;
+					});
+
+					const options = sortedVariants.map((variant: IDataObject, index: number) => {
+						const id = (variant.id as string).substring(0, 8);
+						const createdAt = variant.created_at
+							? new Date(variant.created_at as string).toLocaleDateString()
+							: 'Unknown date';
+
 						return {
-							name: `Variant ${(variant.id as string).substring(0, 8)}... (${createdAt})`,
+							name: `Variant #${index + 1} (${createdAt})`,
 							value: variant.id as string,
-							description: `ID: ${variant.id}`,
+							description: `ID: ${id}`,
 						};
 					});
-				} catch {
-					return [];
+
+					// Add info message if we hit the limit
+					if (variants.length >= 100) {
+						options.push({
+							name: '─────────────────────────────',
+							value: '',
+							description: 'Showing most recent 100 variants. Use Variant ID directly if not listed.',
+						});
+					}
+
+					return options;
+				} catch (error) {
+					return [
+						{
+							name: 'Error Loading Variants',
+							value: '',
+							description: `${error instanceof Error ? error.message : 'Unknown error'}`,
+						},
+					];
 				}
 			},
 		},
