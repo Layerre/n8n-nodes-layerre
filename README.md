@@ -39,7 +39,7 @@ npm install n8n-nodes-layerre
 
 To use this node, you need a Layerre API key:
 
-1. Log in to your [Layerre account](https://app.layerre.com)
+1. Log in to your [Layerre account](https://layerre.com/app)
 2. Go to API Keys
 3. Create a new API key
 4. Copy the key (starts with `lyr_`)
