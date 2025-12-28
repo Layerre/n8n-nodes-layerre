@@ -1,0 +1,91 @@
+import type { INodeProperties } from 'n8n-workflow';
+import { templateCreateDescription } from './create';
+import { templateGetDescription } from './get';
+import { templateGetAllDescription } from './getAll';
+import { templateUpdateDescription } from './update';
+import { templateDeleteDescription } from './delete';
+
+const showOnlyForTemplate = {
+	resource: ['template'],
+};
+
+export const templateDescription: INodeProperties[] = [
+	{
+		displayName: 'Operation',
+		name: 'operation',
+		type: 'options',
+		noDataExpression: true,
+		displayOptions: {
+			show: showOnlyForTemplate,
+		},
+		options: [
+			{
+				name: 'Create',
+				value: 'create',
+				action: 'Create a template from canva',
+				description: 'Create a new template from a Canva design URL',
+				routing: {
+					request: {
+						method: 'POST',
+						url: '/template',
+					},
+				},
+			},
+			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a template',
+				description: 'Delete a template',
+				routing: {
+					request: {
+						method: 'DELETE',
+						url: '=/template/{{$parameter.templateId}}',
+					},
+				},
+			},
+			{
+				name: 'Get',
+				value: 'get',
+				action: 'Get a template',
+				description: 'Get a template by ID with all its layers',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/template/{{$parameter.templateId}}',
+					},
+				},
+			},
+			{
+				name: 'Get Many',
+				value: 'getAll',
+				action: 'Get many templates',
+				description: 'Get many templates for the current user',
+				routing: {
+					request: {
+						method: 'GET',
+						url: '/templates',
+					},
+				},
+			},
+			{
+				name: 'Update',
+				value: 'update',
+				action: 'Update a template',
+				description: 'Update a template',
+				routing: {
+					request: {
+						method: 'PATCH',
+						url: '=/template/{{$parameter.templateId}}',
+					},
+				},
+			},
+		],
+		default: 'create',
+	},
+	...templateCreateDescription,
+	...templateGetDescription,
+	...templateGetAllDescription,
+	...templateUpdateDescription,
+	...templateDeleteDescription,
+];
+

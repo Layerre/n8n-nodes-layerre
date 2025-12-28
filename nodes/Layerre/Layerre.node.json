@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-layerre.layerre",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Marketing & Content", "Productivity"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.layerre.com/api/authentication"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.layerre.com"
+			}
+		]
+	},
+	"alias": ["canva", "template", "image", "design", "variant"],
+	"subcategories": {
+		"Marketing & Content": ["Content Creation"]
+	}
+}
