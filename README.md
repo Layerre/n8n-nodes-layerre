@@ -26,7 +26,6 @@ npm install n8n-nodes-layerre
 - **Create** - Create a new template from a Canva design URL
 - **Get** - Get a template by ID with all its layers
 - **Get Many** - List all templates for the current user
-- **Update** - Update template properties (name, dimensions, background color)
 - **Delete** - Delete a template
 
 ### Variant
@@ -41,15 +40,14 @@ npm install n8n-nodes-layerre
 To use this node, you need a Layerre API key:
 
 1. Log in to your [Layerre account](https://app.layerre.com)
-2. Go to Settings → API Keys
+2. Go to API Keys
 3. Create a new API key
-4. Copy the key (format: `lyr_<key_id>_<secret>`)
+4. Copy the key (starts with `lyr_`)
 
 In n8n:
 1. Go to Credentials → Add Credential
 2. Search for "Layerre API"
 3. Paste your API key
-4. (Optional) Change the Base URL if using a custom endpoint
 
 ## Usage
 
@@ -69,10 +67,14 @@ The node will return the template with all extracted layers.
 2. Select **Variant** as the resource
 3. Select **Create** as the operation
 4. Choose a template from the dropdown (dynamically loaded from your account)
-5. Add layer overrides:
-   - Select a layer from the dropdown
-   - Set text, image URL, color, position, size, etc.
-6. Execute the node
+5. (Optional) Set variant dimensions (width/height) to override the template size
+6. Add layer overrides:
+   - Select a layer from the dropdown (dynamically loaded from the selected template)
+   - Configure override options:
+     - **Text layers**: text content, color, font name, font size, font weight, italic, underline, text align, letter spacing, line spacing
+     - **Image layers**: image URL, opacity, flip horizontal/vertical
+     - **All layers**: position (x, y), size (width, height), rotation, color
+7. Execute the node
 
 The node will render the variant and return the image URL.
 

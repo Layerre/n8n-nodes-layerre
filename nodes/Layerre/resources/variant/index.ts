@@ -167,7 +167,7 @@ export const variantDescription: INodeProperties[] = [
 				name: 'Get',
 				value: 'get',
 				action: 'Get a variant',
-				description: 'Get a variant by ID',
+				description: 'Retrieve a variant by ID',
 				routing: {
 					request: {
 						method: 'GET',
@@ -179,7 +179,7 @@ export const variantDescription: INodeProperties[] = [
 				name: 'Get Many',
 				value: 'getAll',
 				action: 'Get many variants',
-				description: 'Get many variants for a template',
+				description: 'Retrieve a list of variants for a template',
 				routing: {
 					request: {
 						method: 'GET',

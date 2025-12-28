@@ -79,9 +79,9 @@ export class Layerre implements INodeType {
 					if (!Array.isArray(templates)) {
 						return [
 							{
-								name: 'Error: Invalid response from API',
+								name: 'Invalid response from API',
 								value: '',
-								description: 'Please check your API credentials',
+								description: 'Please check your API credentials and try again',
 							},
 						];
 					}
@@ -127,9 +127,9 @@ export class Layerre implements INodeType {
 				} catch (error) {
 					return [
 						{
-							name: 'Error Loading Templates',
+							name: 'Could not load templates',
 							value: '',
-							description: `${error instanceof Error ? error.message : 'Unknown error'}`,
+							description: `${error instanceof Error ? error.message : 'Unknown error'}. Please check your API credentials and try again`,
 						},
 					];
 				}
@@ -161,9 +161,9 @@ export class Layerre implements INodeType {
 					if (!template || !Array.isArray(template.layers)) {
 						return [
 							{
-								name: 'Error: Could not load template layers',
+								name: 'Could not load template layers',
 								value: '',
-								description: 'Template may not exist or has no layers',
+								description: 'Template may not exist or has no layers. Please check the template ID and try again',
 							},
 						];
 					}
@@ -216,9 +216,9 @@ export class Layerre implements INodeType {
 				} catch (error) {
 					return [
 						{
-							name: 'Error Loading Layers',
+							name: 'Could not load layers',
 							value: '',
-							description: `${error instanceof Error ? error.message : 'Unknown error'}`,
+							description: `${error instanceof Error ? error.message : 'Unknown error'}. Please check the template ID and try again`,
 						},
 					];
 				}
@@ -252,9 +252,9 @@ export class Layerre implements INodeType {
 					if (!Array.isArray(variants)) {
 						return [
 							{
-								name: 'Error: Invalid response from API',
+								name: 'Invalid response from API',
 								value: '',
-								description: 'Please check your API credentials',
+								description: 'Please check your API credentials and try again',
 							},
 						];
 					}
@@ -302,9 +302,9 @@ export class Layerre implements INodeType {
 				} catch (error) {
 					return [
 						{
-							name: 'Error Loading Variants',
+							name: 'Could not load variants',
 							value: '',
-							description: `${error instanceof Error ? error.message : 'Unknown error'}`,
+							description: `${error instanceof Error ? error.message : 'Unknown error'}. Please check the template ID and try again`,
 						},
 					];
 				}

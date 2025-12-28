@@ -244,7 +244,7 @@ export const variantCreateDescription: INodeProperties[] = [
 								name: 'fontWeight',
 								type: 'string',
 								default: '',
-								placeholder: 'e.g., bold, 700',
+								placeholder: 'e.g. bold, 700',
 								description: 'Override the font weight (for text layers). Use values like "bold", "normal", or numeric values like "400", "700".',
 							},
 							{

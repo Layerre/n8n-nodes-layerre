@@ -18,7 +18,7 @@ export const templateCreateDescription: INodeProperties[] = [
 		displayOptions: {
 			show: showOnlyForTemplateCreate,
 		},
-		placeholder: 'https://www.canva.com/design/...',
+		placeholder: 'e.g. https://www.canva.com/design/DAFxyz123/example',
 		description: 'The Canva share URL for the design to import as a template',
 		routing: {
 			send: {
