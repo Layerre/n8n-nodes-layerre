@@ -105,7 +105,12 @@ Contributions are welcome! Here's how to get started:
    npm install
    ```
 
-4. Start development mode (runs n8n with the node loaded):
+4. Install n8n globally:
+   ```bash
+   npm install n8n -g
+   ```
+
+5. Start development mode (runs n8n with the node loaded):
    ```bash
    npm run dev
    ```

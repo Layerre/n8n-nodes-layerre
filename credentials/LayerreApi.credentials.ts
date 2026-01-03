@@ -13,7 +13,7 @@ export class LayerreApi implements ICredentialType {
 
 	documentationUrl = 'https://layerre.com/docs';
 
-	icon: Icon = 'file:../nodes/Layerre/layerre.png';
+	icon: Icon = 'file:../nodes/Layerre/layerre.svg';
 
 	properties: INodeProperties[] = [
 		{
