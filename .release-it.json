@@ -1,0 +1,20 @@
+{
+  "git": {
+    "commitMessage": "chore: release v${version}",
+    "tagName": "v${version}",
+    "requireCleanWorkingDir": false,
+    "requireUpstream": false,
+    "requireCommits": false
+  },
+  "github": {
+    "release": false
+  },
+  "npm": {
+    "publish": false
+  },
+  "hooks": {
+    "before:init": ["npm run lint", "npm run build"],
+    "after:bump": "npm run build"
+  }
+}
+
