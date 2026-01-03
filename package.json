@@ -1,11 +1,16 @@
 {
   "name": "n8n-nodes-layerre",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "n8n community node for Layerre - create templates and variants from Canva designs",
   "license": "MIT",
   "homepage": "https://layerre.com",
-  "keywords": ["n8n-community-node-package"],
-  "author": { "name": "NicoleStrel", "email": "streltsovnicole@gmail.com" },
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "author": {
+    "name": "Layerre",
+    "url": "https://layerre.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/layerre/n8n-nodes-layerre.git"
@@ -19,12 +24,18 @@
     "release": "n8n-node release",
     "prepublishOnly": "n8n-node prerelease"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "strict": true,
-    "credentials": ["dist/credentials/LayerreApi.credentials.js"],
-    "nodes": ["dist/nodes/Layerre/Layerre.node.js"]
+    "credentials": [
+      "dist/credentials/LayerreApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Layerre/Layerre.node.js"
+    ]
   },
   "devDependencies": {
     "@n8n/node-cli": "*",
@@ -33,5 +44,7 @@
     "release-it": "^19.0.4",
     "typescript": "5.9.2"
   },
-  "peerDependencies": { "n8n-workflow": "*" }
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
 }
