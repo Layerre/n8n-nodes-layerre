@@ -26,7 +26,6 @@ export async function layerreApiRequest(
 		body,
 		json: true,
 		headers: {
-			Authorization: `Bearer ${credentials.apiKey}`,
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
 		},
@@ -40,5 +39,9 @@ export async function layerreApiRequest(
 		delete options.qs;
 	}
 
-	return await this.helpers.httpRequest(options);
+	return await this.helpers.httpRequestWithAuthentication.call(
+		this,
+		'layerreApi',
+		options,
+	);
 }

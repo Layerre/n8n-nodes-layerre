@@ -15,8 +15,5 @@
 			}
 		]
 	},
-	"alias": ["canva", "template", "image", "design", "variant"],
-	"subcategories": {
-		"Marketing & Content": ["Content Creation"]
-	}
+	"alias": ["canva", "template", "image", "design", "variant", "layerre", "graphic", "creative", "visual", "asset", "brand", "marketing", "bulk", "render"]
 }
