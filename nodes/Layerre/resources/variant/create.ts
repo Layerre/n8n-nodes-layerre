@@ -21,6 +21,44 @@ export const variantCreateDescription: INodeProperties[] = [
 		description: 'The template to create a variant from. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
+		displayName: 'Export Type',
+		name: 'exportType',
+		type: 'options',
+		default: 'png',
+		displayOptions: {
+			show: showOnlyForVariantCreate,
+		},
+		options: [
+			{
+				name: 'PNG',
+				value: 'png',
+				description: 'Export as PNG image',
+			},
+			{
+				name: 'JPEG',
+				value: 'jpeg',
+				description: 'Export as JPEG image',
+			},
+			{
+				name: 'WEBP',
+				value: 'webp',
+				description: 'Export as WEBP image',
+			},
+			{
+				name: 'PDF',
+				value: 'pdf',
+				description: 'Export as PDF document',
+			},
+		],
+		description: 'Export format for the variant',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'export_type',
+			},
+		},
+	},
+	{
 		displayName: 'Variant Dimensions',
 		name: 'variantDimensions',
 		type: 'collection',
