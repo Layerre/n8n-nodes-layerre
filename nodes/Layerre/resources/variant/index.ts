@@ -66,6 +66,9 @@ async function transformVariantCreateBody(
 			if (overrideOptions.textAlign && overrideOptions.textAlign !== 'left') {
 				properties.text_align = overrideOptions.textAlign;
 			}
+			if (overrideOptions.rtlEnabled) {
+				properties.text_direction = 'rtl';
+			}
 			if (overrideOptions.letterSpacing !== undefined && overrideOptions.letterSpacing !== 0) {
 				properties.letter_spacing = overrideOptions.letterSpacing;
 			}

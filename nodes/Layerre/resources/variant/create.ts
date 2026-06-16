@@ -201,6 +201,14 @@ export const variantCreateDescription: INodeProperties[] = [
 								description: 'Override the rotation angle in degrees',
 							},
 							{
+								displayName: 'RTL Enabled',
+								name: 'rtlEnabled',
+								type: 'boolean',
+								default: false,
+								description:
+									'Whether to enable right-to-left text direction (for Arabic, Hebrew, etc.)',
+							},
+							{
 								displayName: 'Text',
 								name: 'text',
 								type: 'string',
