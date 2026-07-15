@@ -276,16 +276,36 @@ export class Layerre implements INodeType {
 						return dateB - dateA;
 					});
 
-					const options = sortedVariants.map((variant: IDataObject, index: number) => {
+					const options = sortedVariants.map((variant: IDataObject) => {
 						const id = (variant.id as string).substring(0, 8);
 						const createdAt = variant.created_at
 							? new Date(variant.created_at as string).toLocaleDateString()
 							: 'Unknown date';
 
+						if (variant.is_combined_pdf) {
+							const sections = variant.combined_section_count
+								? ` · ${variant.combined_section_count} pages`
+								: '';
+							return {
+								name: `Combined PDF ${id}${sections}`,
+								value: variant.id as string,
+								description: `Created ${createdAt}`,
+							};
+						}
+
+						const dims =
+							variant.width && variant.height
+								? ` (${variant.width}×${variant.height})`
+								: '';
+						const pageSuffix =
+							typeof variant.page_number === 'number'
+								? ` · page ${(variant.page_number as number) + 1}`
+								: '';
+
 						return {
-							name: `Variant #${index + 1} (${createdAt})`,
+							name: `Variant ${id}${dims}${pageSuffix}`,
 							value: variant.id as string,
-							description: `ID: ${id}`,
+							description: `Created ${createdAt}`,
 						};
 					});
 

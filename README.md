@@ -31,6 +31,7 @@ npm install n8n-nodes-layerre
 ### Variant
 
 - **Create** - Create a new variant with layer overrides (text, images, colors, positions, etc.)
+- **Create Bulk** - Create many variants in one request, with optional combined PDF output
 - **Get** - Get a variant by ID
 - **Get Many** - List all variants for a template
 - **Delete** - Delete a variant
@@ -67,16 +68,29 @@ The node will return the template with all extracted layers.
 2. Select **Variant** as the resource
 3. Select **Create** as the operation
 4. Choose a template from the dropdown (dynamically loaded from your account)
-5. (Optional) Set variant dimensions (width/height) to override the template size
-6. Add layer overrides:
+5. (Optional) Set page number for multi-page templates (0-based index)
+6. (Optional) Set variant dimensions (width/height) to override the template size
+7. Add layer overrides:
    - Select a layer from the dropdown (dynamically loaded from the selected template)
    - Configure override options:
      - **Text layers**: text content, color, font name, font size, font weight, italic, underline, text align, letter spacing, line spacing
      - **Image layers**: image URL, opacity, flip horizontal/vertical
      - **All layers**: position (x, y), size (width, height), rotation, color
-7. Execute the node
+8. Execute the node
 
 The node will render the variant and return the image URL.
+
+### Creating Variants in Bulk
+
+1. Add the **Layerre** node to your workflow
+2. Select **Variant** as the resource
+3. Select **Create Bulk** as the operation
+4. Choose a template and export type (PDF recommended for combined output)
+5. (Optional) Enable **Combine Into One PDF** when export type is PDF
+6. Add one or more items, each with optional page number, dimensions, and layer overrides
+7. Execute the node
+
+The response includes `results`, `total_created`, `total_failed`, and when `combine_pdf` is enabled, `combined_pdf` with `url` and a persisted `variant` record.
 
 ### Example: Bulk Image Generation
 
