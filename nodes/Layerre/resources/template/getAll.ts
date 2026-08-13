@@ -65,6 +65,20 @@ export const templateGetAllDescription: INodeProperties[] = [
 					},
 				},
 			},
+			{
+				displayName: 'Tag Filter',
+				name: 'tag',
+				type: 'string',
+				default: '',
+				placeholder: 'campaign',
+				description: 'Return only templates that have this tag. Leave blank for all templates.',
+				routing: {
+					send: {
+						type: 'query',
+						property: 'tag',
+					},
+				},
+			},
 		],
 	},
 ];
